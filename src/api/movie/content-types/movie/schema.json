@@ -1,0 +1,25 @@
+{
+  "kind": "collectionType",
+  "collectionName": "movies",
+  "info": {
+    "singularName": "movie",
+    "pluralName": "movies",
+    "displayName": "Movie"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "imdbID": {
+      "type": "uid",
+      "required": true
+    },
+    "movie_ratings": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::movie-rating.movie-rating",
+      "mappedBy": "movie"
+    }
+  }
+}
