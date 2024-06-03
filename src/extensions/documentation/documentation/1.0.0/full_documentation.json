@@ -14,7 +14,7 @@
       "name": "Apache 2.0",
       "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
     },
-    "x-generation-date": "2024-05-31T16:52:49.794Z"
+    "x-generation-date": "2024-06-02T23:37:53.544Z"
   },
   "x-strapi-config": {
     "path": "/documentation",
@@ -231,10 +231,6 @@
                                       "format": "date-time"
                                     },
                                     "updatedAt": {
-                                      "type": "string",
-                                      "format": "date-time"
-                                    },
-                                    "publishedAt": {
                                       "type": "string",
                                       "format": "date-time"
                                     },
@@ -792,10 +788,6 @@
                           "type": "string",
                           "format": "date-time"
                         },
-                        "publishedAt": {
-                          "type": "string",
-                          "format": "date-time"
-                        },
                         "createdBy": {
                           "type": "object",
                           "properties": {
@@ -842,10 +834,6 @@
             "format": "date-time"
           },
           "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "publishedAt": {
             "type": "string",
             "format": "date-time"
           },
@@ -914,9 +902,6 @@
         ],
         "properties": {
           "data": {
-            "required": [
-              "rating"
-            ],
             "type": "object",
             "properties": {
               "rating": {
@@ -996,9 +981,6 @@
       },
       "MovieRating": {
         "type": "object",
-        "required": [
-          "rating"
-        ],
         "properties": {
           "rating": {
             "type": "integer"
@@ -1566,10 +1548,6 @@
                                       "type": "string",
                                       "format": "date-time"
                                     },
-                                    "publishedAt": {
-                                      "type": "string",
-                                      "format": "date-time"
-                                    },
                                     "createdBy": {
                                       "type": "object",
                                       "properties": {
@@ -1616,10 +1594,6 @@
                         "format": "date-time"
                       },
                       "updatedAt": {
-                        "type": "string",
-                        "format": "date-time"
-                      },
-                      "publishedAt": {
                         "type": "string",
                         "format": "date-time"
                       },
@@ -1685,10 +1659,6 @@
             "format": "date-time"
           },
           "updatedAt": {
-            "type": "string",
-            "format": "date-time"
-          },
-          "publishedAt": {
             "type": "string",
             "format": "date-time"
           },
@@ -1958,6 +1928,77 @@
     }
   },
   "paths": {
+    "/movies/top-ten": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Unauthorized",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Forbidden",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Not Found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal Server Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "Movie"
+        ],
+        "parameters": [],
+        "operationId": "get/movies/top-ten"
+      }
+    },
     "/movies": {
       "get": {
         "responses": {

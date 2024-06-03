@@ -362,6 +362,81 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiMovieMovie extends Schema.CollectionType {
+  collectionName: 'movies';
+  info: {
+    singularName: 'movie';
+    pluralName: 'movies';
+    displayName: 'Movie';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    imdbID: Attribute.UID & Attribute.Required;
+    movie_ratings: Attribute.Relation<
+      'api::movie.movie',
+      'oneToMany',
+      'api::movie-rating.movie-rating'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::movie.movie',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::movie.movie',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiMovieRatingMovieRating extends Schema.CollectionType {
+  collectionName: 'movie_ratings';
+  info: {
+    singularName: 'movie-rating';
+    pluralName: 'movie-ratings';
+    displayName: 'Movie Rating';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    rating: Attribute.Integer;
+    movie: Attribute.Relation<
+      'api::movie-rating.movie-rating',
+      'manyToOne',
+      'api::movie.movie'
+    >;
+    user: Attribute.Relation<
+      'api::movie-rating.movie-rating',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::movie-rating.movie-rating',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::movie-rating.movie-rating',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -788,89 +863,6 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
   };
 }
 
-export interface ApiMovieMovie extends Schema.CollectionType {
-  collectionName: 'movies';
-  info: {
-    singularName: 'movie';
-    pluralName: 'movies';
-    displayName: 'Movie';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    imdbID: Attribute.UID & Attribute.Required;
-    movie_ratings: Attribute.Relation<
-      'api::movie.movie',
-      'oneToMany',
-      'api::movie-rating.movie-rating'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::movie.movie',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::movie.movie',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiMovieRatingMovieRating extends Schema.CollectionType {
-  collectionName: 'movie_ratings';
-  info: {
-    singularName: 'movie-rating';
-    pluralName: 'movie-ratings';
-    displayName: 'MovieRating';
-  };
-  options: {
-    draftAndPublish: true;
-  };
-  attributes: {
-    rating: Attribute.Integer &
-      Attribute.Required &
-      Attribute.SetMinMax<
-        {
-          min: 1;
-          max: 10;
-        },
-        number
-      >;
-    movie: Attribute.Relation<
-      'api::movie-rating.movie-rating',
-      'manyToOne',
-      'api::movie.movie'
-    >;
-    user: Attribute.Relation<
-      'api::movie-rating.movie-rating',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    publishedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::movie-rating.movie-rating',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::movie-rating.movie-rating',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -881,6 +873,8 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::movie.movie': ApiMovieMovie;
+      'api::movie-rating.movie-rating': ApiMovieRatingMovieRating;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -889,8 +883,6 @@ declare module '@strapi/types' {
       'plugin::users-permissions.permission': PluginUsersPermissionsPermission;
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
-      'api::movie.movie': ApiMovieMovie;
-      'api::movie-rating.movie-rating': ApiMovieRatingMovieRating;
     }
   }
 }

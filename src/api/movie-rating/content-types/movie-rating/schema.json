@@ -4,18 +4,15 @@
   "info": {
     "singularName": "movie-rating",
     "pluralName": "movie-ratings",
-    "displayName": "MovieRating"
+    "displayName": "Movie Rating",
+    "description": ""
   },
   "options": {
-    "draftAndPublish": true
+    "draftAndPublish": false
   },
-  "pluginOptions": {},
   "attributes": {
     "rating": {
-      "type": "integer",
-      "min": 1,
-      "max": 10,
-      "required": true
+      "type": "integer"
     },
     "movie": {
       "type": "relation",
