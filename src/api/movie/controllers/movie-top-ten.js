@@ -38,6 +38,7 @@ module.exports = {
       
       ctx.send(topTenMovies);
     } catch (error) {
+        console.log("error", error);
       ctx.send({ error: 'An error occurred' });
     }
   },
