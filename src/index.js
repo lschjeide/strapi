@@ -112,8 +112,8 @@ module.exports = {
 
         return {
           email,
-          firstname: givenName,
-          lastname: familyName,
+          firstName: givenName,
+          lastName: familyName,
           provider: 'apple',
           username: email,
         };
