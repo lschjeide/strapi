@@ -20,5 +20,30 @@ module.exports = ({ env }) => ({
           },
         }
       },
-    }
+    },
+        'users-permissions': {
+          config: {
+            providers: {
+              google: {
+                enabled: true,
+                icon: 'google',
+                key: env('GOOGLE_CLIENT_ID'),
+                secret: env('GOOGLE_CLIENT_SECRET'),
+                callback: `${env('BASE_URL')}/api/auth/google/callback`,
+                scope: ['openid', 'email', 'profile'],
+              },
+              apple: {
+                enabled: true,
+                icon: 'apple',
+                key: env('APPLE_CLIENT_ID'),
+                secret: env('APPLE_CLIENT_SECRET'),
+                callback: `${env('BASE_URL')}/api/connect/apple/callback`,
+                scope: ['name', 'email'],
+                teamId: env('APPLE_TEAM_ID'),
+                keyId: env('APPLE_KEY_ID'),
+              },
+            },
+          },
+        },
+    
   });
