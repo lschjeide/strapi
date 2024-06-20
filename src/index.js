@@ -35,6 +35,7 @@ module.exports = {
             scope: ['name', 'email'],
             authorize_url: 'https://appleid.apple.com/auth/authorize',
             access_url: 'https://appleid.apple.com/auth/token',
+            response_mode: 'form_post',
           };
           await pluginStore.set({ key: 'grant', value: grantConfig });
         }
