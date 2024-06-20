@@ -26,6 +26,7 @@ const generateAppleClientSecret = () => {
 
 module.exports = {
   async connect(provider, query) {
+    console.log(`Connecting with provider: ${provider}`);
     if (provider === 'google') {
       const res = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
         headers: {
@@ -34,12 +35,12 @@ module.exports = {
       });
 
       const { data } = res;
+      console.log('Google user data:', data);
 
       return {
         email: data.email,
         firstName: data.given_name,
         lastName: data.family_name,
-       // picture: data.picture,
         provider: 'google',
         username: data.email,
       };
@@ -56,8 +57,9 @@ module.exports = {
         throw new Error('Unable to decode ID token');
       }
 
-      // @ts-ignore
       const { email } = decodedToken.payload;
+
+      console.log('Decoded Apple token, email:', email);
 
       const appleClientSecret = generateAppleClientSecret();
 
@@ -67,13 +69,15 @@ module.exports = {
         data: qs.stringify({
           grant_type: 'authorization_code',
           code,
-          redirect_uri: `${strapi.config.server.url}/api/connect/apple/callback`,
+          redirect_uri: `${process.env.BASE_URL}/api/connect/apple/callback`,
           client_id: process.env.APPLE_CLIENT_ID,
           client_secret: appleClientSecret,
         }),
       });
 
       const { access_token } = response.data;
+
+      console.log('Apple access token:', access_token);
 
       const userInfo = await axios({
         method: 'get',
@@ -82,6 +86,8 @@ module.exports = {
       });
 
       const { givenName, familyName } = userInfo.data;
+
+      console.log('Apple user info:', userInfo.data);
 
       return {
         email,
