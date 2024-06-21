@@ -11,8 +11,6 @@ module.exports = [
   'strapi::public',
   {
     name: 'inject-response-mode',
-    config: {
-      resolve: '../src/middlewares/inject-response-mode',
-    },
+    resolve: '../src/middlewares/inject-response-mode',
   },
 ];
