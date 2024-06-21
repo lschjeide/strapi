@@ -1,5 +1,3 @@
-const injectResponseMode = require('../src/middlewares/inject-response-mode');
-
 
 module.exports = ({ env }) => ({
   host: env('HOST', '0.0.0.0'),
@@ -14,13 +12,5 @@ module.exports = ({ env }) => ({
   proxy: {
     enabled: true,
     ssl: true,
-  },
-  middleware: {
-    settings: {
-      injectResponseMode: {
-        enabled: true,
-        resolve: injectResponseMode,
-      },
-    },
   },
 });
