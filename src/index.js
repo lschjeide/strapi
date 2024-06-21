@@ -19,50 +19,6 @@ module.exports = {
 
       const grantConfig = await pluginStore.get({ key: 'grant' });
 
-      const buildAuthorizationUrl = () => {
-        const params = {
-          client_id: process.env.APPLE_CLIENT_ID,
-          response_type: 'code',
-          redirect_uri: `${process.env.BASE_URL}/api/connect/apple/callback`,
-          scope: 'name email',
-          response_mode: 'form_post',
-        };
-        return `https://appleid.apple.com/auth/authorize?${qs.stringify(params)}`;
-      };
-
-      const authorizationUrl = buildAuthorizationUrl();
-      console.log('Apple authorization URL:', authorizationUrl);
-
-      if (grantConfig) {
-        console.log('Initial grant config:', grantConfig);
-        if (grantConfig.google && grantConfig.google.scope) {
-          grantConfig.google.scope = ['openid', 'email', 'profile'];
-          await pluginStore.set({ key: 'grant', value: grantConfig });
-        }
-        if (!grantConfig.apple) {
-          grantConfig.apple = {
-            enabled: true,
-            icon: 'apple',
-            key: process.env.APPLE_CLIENT_ID,
-            secret: process.env.APPLE_CLIENT_SECRET,
-            callback: `${process.env.BASE_URL}/api/connect/apple/callback`,
-            authorize_url: `https://appleid.apple.com/auth/authorize`,
-            access_url: 'https://appleid.apple.com/auth/token',
-            redirect_uri: `https://82e2-98-246-202-159.ngrok-free.app/connect/google/redirect`,
-            response_mode: 'form_data'
-          };
-          await pluginStore.set({ key: 'grant', value: grantConfig });
-        } else {
-          grantConfig.apple.authorize_url = `https://appleid.apple.com/auth/authorize`;
-          grantConfig.apple.response_mode = `form_data`;
-          grantConfig.apple.callback = `${process.env.BASE_URL}/api/connect/apple/callback`;
-          grantConfig.apple.redirect_uri = `https://82e2-98-246-202-159.ngrok-free.app/connect/google/redirect`;
-          await pluginStore.set({ key: 'grant', value: grantConfig });
-        }
-      }
-      
-      console.log('Updated grant config:', grantConfig);
-
       const generateAppleClientSecret = () => {
         const privateKey = process.env.APPLE_PRIVATE_KEY.replace(/\\n/g, '\n');
         const teamId = process.env.APPLE_TEAM_ID;
@@ -87,6 +43,39 @@ module.exports = {
 
       const appleClientSecret = generateAppleClientSecret();
       console.log('Apple client secret generated.');
+      console.log('Apple authorization URL:', authorizationUrl);
+
+      if (grantConfig) {
+        console.log('Initial grant config:', grantConfig);
+        if (grantConfig.google && grantConfig.google.scope) {
+          grantConfig.google.scope = ['openid', 'email', 'profile'];
+          await pluginStore.set({ key: 'grant', value: grantConfig });
+        }
+        if (!grantConfig.apple) {
+          grantConfig.apple = {
+            enabled: true,
+            icon: 'apple',
+            key: process.env.APPLE_CLIENT_ID,
+            clientSecret: appleClientSecret,
+            callback: `${process.env.BASE_URL}/api/connect/apple/callback`,
+            authorize_url: `https://appleid.apple.com/auth/authorize`,
+            access_url: 'https://appleid.apple.com/auth/token',
+            redirect_uri: `https://82e2-98-246-202-159.ngrok-free.app/connect/google/redirect`,
+            response_mode: 'form_data'
+          };
+          await pluginStore.set({ key: 'grant', value: grantConfig });
+        } else {
+          grantConfig.apple.authorize_url = `https://appleid.apple.com/auth/authorize`;
+          grantConfig.apple.response_mode = `form_data`;
+          grantConfig.apple.callback = `${process.env.BASE_URL}/api/connect/apple/callback`;
+          grantConfig.apple.redirect_uri = `https://82e2-98-246-202-159.ngrok-free.app/connect/google/redirect`;
+          await pluginStore.set({ key: 'grant', value: grantConfig });
+        }
+      }
+      
+      console.log('Updated grant config:', grantConfig);
+
+      
 
       await strapi
         .service('plugin::users-permissions.providers-registry')
