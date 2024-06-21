@@ -113,7 +113,7 @@ module.exports = {
       await strapi
         .service('plugin::users-permissions.providers-registry')
         .register('apple', ({ purest }) => async ({ query }) => {
-          console.log('Handling Apple login...');
+          strapi.log.info('Handling Apple login...');
           const { code, id_token } = query;
 
           // Verify the ID token
@@ -125,7 +125,7 @@ module.exports = {
 
           const { email } = decodedToken.payload;
 
-          console.log('Decoded Apple token, email:', email);
+          strapi.log.info(`Decoded Apple token, email: ${email}`);
 
           // Exchange authorization code for access token
           const response = await axios({
@@ -142,7 +142,7 @@ module.exports = {
 
           const { access_token } = response.data;
 
-          console.log('Apple access token:', access_token);
+          strapi.log.info('Apple access token:', access_token);
 
           // Get user info from Apple
           const userInfo = await axios({
@@ -153,7 +153,7 @@ module.exports = {
 
           const { givenName, familyName } = userInfo.data;
 
-          console.log('Apple user info:', userInfo.data);
+          strapi.log.info('Apple user info:', userInfo.data);
 
           return {
             email,
@@ -164,7 +164,7 @@ module.exports = {
           };
         });
 
-      console.log('Apple provider registered.');
+        strapi.log.info('Apple provider registered.');
 
     } catch (error) {
       console.error('Error during bootstrap:', error);
