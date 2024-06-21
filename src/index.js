@@ -152,12 +152,12 @@ module.exports = {
       const providerSettings = await pluginStore.get({ key: 'grant' });
       if (providerSettings && providerSettings.apple) {
         const authorizeUrl = new URL(providerSettings.apple.authorize_url);
-        authorizeUrl.searchParams.append('response_mode', 'form_post');
+        authorizeUrl.searchParams.set('response_mode', 'form_post');
         providerSettings.apple.authorize_url = authorizeUrl.toString();
         await pluginStore.set({ key: 'grant', value: providerSettings });
         console.log('Provider settings updated:', providerSettings);
       }
-      
+
     } catch (error) {
       console.error('Error during bootstrap:', error);
     }
