@@ -19,6 +19,20 @@ module.exports = {
 
       const grantConfig = await pluginStore.get({ key: 'grant' });
 
+      const buildAuthorizationUrl = () => {
+        const params = {
+          client_id: process.env.APPLE_CLIENT_ID,
+          response_type: 'code',
+          redirect_uri: `${process.env.BASE_URL}/api/connect/apple/callback`,
+          scope: 'name email',
+          response_mode: 'form_post',
+        };
+        return `https://appleid.apple.com/auth/authorize?${qs.stringify(params)}`;
+      };
+
+      const authorizationUrl = buildAuthorizationUrl();
+      console.log('Apple authorization URL:', authorizationUrl);
+
       if (grantConfig) {
         console.log('Initial grant config:', grantConfig);
         if (grantConfig.google && grantConfig.google.scope) {
@@ -33,19 +47,13 @@ module.exports = {
             secret: process.env.APPLE_CLIENT_SECRET,
             callback: `${process.env.BASE_URL}/api/connect/apple/callback`,
             scope: ['name', 'email'],
-            authorize_url: 'https://appleid.apple.com/auth/authorize',
+            authorize_url: authorizationUrl,
             access_url: 'https://appleid.apple.com/auth/token',
-            response: ['form_post'],
-            response_mode: 'form_post',
-            response_type: 'form_post'
           };
           await pluginStore.set({ key: 'grant', value: grantConfig });
         } else {
-          grantConfig.apple.authorize_url = 'https://appleid.apple.com/auth/authorize';
+          grantConfig.apple.authorize_url = authorizationUrl;
           grantConfig.apple.callback = `${process.env.BASE_URL}/api/connect/apple/callback`;
-          grantConfig.apple.response = ['form_post'];
-          grantConfig.apple.response_mode = 'form_post';
-          grantConfig.apple.response_type = 'form_post';
           await pluginStore.set({ key: 'grant', value: grantConfig });
         }
       }
