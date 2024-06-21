@@ -18,7 +18,7 @@ module.exports = (config, { strapi }) => {
         strapi.log.info(`Updated url, ${ctx.request.url}`);
           }
       }*/
-    ctx.request 
+   // ctx.request 
   
       await next();
   
