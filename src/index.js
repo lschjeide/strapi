@@ -55,7 +55,7 @@ module.exports = {
             enabled: true,
             icon: 'apple',
             key: process.env.APPLE_CLIENT_ID,
-            secret: appleClientSecret,
+            clientSecret: appleClientSecret,
             callback: `${process.env.BASE_URL}/api/connect/apple/callback`,
             authorize_url: `https://appleid.apple.com/auth/authorize`,
             access_url: 'https://appleid.apple.com/auth/token',
