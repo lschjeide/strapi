@@ -20,7 +20,7 @@ module.exports = (config, { strapi }) => {
       }*/
    // ctx.request 
   
-      await next();
+    //  await next();
   
                   // Add Response-Specific Logic here
     };
