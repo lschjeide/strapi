@@ -36,12 +36,28 @@
   module.exports = (config, { strapi }) => {
     return async (ctx, next) => {
       strapi.log.info(`Middleware triggered for URL: ${ctx.request.url}`);
-      
-      ctx.request
-      // Proceed to the next middleware or route
+  
+      if (ctx.request.url.includes('/api/connect/apple/callback')) {
+        strapi.log.info('Handling Apple OAuth callback', ctx.request.url);
+  
+        const parsedUrl = new URL(ctx.request.url, `https://${ctx.request.headers.host}`);
+        
+        // Check if response_mode=form_post is already present
+        if (!parsedUrl.searchParams.get('response_mode') || parsedUrl.searchParams.get('response_mode') !== 'form_post') {
+          parsedUrl.searchParams.set('response_mode', 'form_post');
+          const updatedUrl = parsedUrl.pathname + parsedUrl.search;
+          
+          // Prevent infinite loop by checking if the URL is different
+          if (ctx.request.url !== updatedUrl) {
+            strapi.log.info(`Redirecting to updated URL: ${updatedUrl}`);
+            ctx.redirect(updatedUrl);
+            return; // Exit to prevent further processing
+          }
+        }
+      }
+  
       await next();
-      
+  
       strapi.log.info(`After middleware processing for URL: ${ctx.request.url}`);
     };
   };
-  
