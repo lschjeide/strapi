@@ -52,7 +52,7 @@ module.exports = {
           };
           await pluginStore.set({ key: 'grant', value: grantConfig });
         } else {
-          grantConfig.apple.authorize_url = `${process.env.BASE_URL}/api/connect/apple/callback`;
+          grantConfig.apple.authorize_url = `${process.env.BASE_URL}/api/connect/apple`;
           grantConfig.apple.callback = `${process.env.BASE_URL}/api/connect/apple/callback`;
           await pluginStore.set({ key: 'grant', value: grantConfig });
         }
