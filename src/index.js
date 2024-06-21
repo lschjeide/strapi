@@ -49,10 +49,12 @@ module.exports = {
             scope: ['name', 'email'],
             authorize_url: `https://appleid.apple.com/auth/authorize`,
             access_url: 'https://appleid.apple.com/auth/token',
+            response_mode: 'form_data'
           };
           await pluginStore.set({ key: 'grant', value: grantConfig });
         } else {
           grantConfig.apple.authorize_url = `https://appleid.apple.com/auth/authorize`;
+          grantConfig.apple.response_mode = `form_data`;
           grantConfig.apple.callback = `${process.env.BASE_URL}/api/connect/apple/callback`;
           await pluginStore.set({ key: 'grant', value: grantConfig });
         }
