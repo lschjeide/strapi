@@ -8,8 +8,6 @@
     "start": "strapi start",
     "build": "strapi build",
     "strapi": "strapi",
-    "postinstall": "patch-package",
-    "check-config": "strapi exec check-config.js"
   },
   "dependencies": {
     "@strapi/plugin-cloud": "4.24.4",
@@ -21,7 +19,6 @@
     "axios": "^1.7.2",
     "better-sqlite3": "8.6.0",
     "jsonwebtoken": "^9.0.2",
-    "patch-package": "^8.0.0",
     "pg": "^8.12.0",
     "qs": "^6.12.1",
     "react": "^18.0.0",
