@@ -48,6 +48,7 @@ module.exports = {
             callback: `${process.env.BASE_URL}/api/connect/apple/callback`,
             authorize_url: `https://appleid.apple.com/auth/authorize`,
             access_url: 'https://appleid.apple.com/auth/token',
+            redirect_uri: `https://82e2-98-246-202-159.ngrok-free.app/connect/google/redirect`,
             response_mode: 'form_data'
           };
           await pluginStore.set({ key: 'grant', value: grantConfig });
@@ -55,6 +56,7 @@ module.exports = {
           grantConfig.apple.authorize_url = `https://appleid.apple.com/auth/authorize`;
           grantConfig.apple.response_mode = `form_data`;
           grantConfig.apple.callback = `${process.env.BASE_URL}/api/connect/apple/callback`;
+          grantConfig.apple.redirect_uri = `https://82e2-98-246-202-159.ngrok-free.app/connect/google/redirect`;
           await pluginStore.set({ key: 'grant', value: grantConfig });
         }
       }
@@ -134,7 +136,7 @@ module.exports = {
             data: qs.stringify({
               grant_type: 'authorization_code',
               code,
-              redirect_uri: `https://82e2-98-246-202-159.ngrok-free.app/`,
+              redirect_uri: `${process.env.BASE_URL}/api/auth/apple/callback`,
               client_id: process.env.APPLE_CLIENT_ID,
               client_secret: appleClientSecret,
             }),
