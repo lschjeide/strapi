@@ -35,8 +35,15 @@ module.exports = {
             scope: ['name', 'email'],
             authorize_url: 'https://appleid.apple.com/auth/authorize',
             access_url: 'https://appleid.apple.com/auth/token',
-            response_mode: 'form_post',
+            response: ['form_post'],
+            response_mode: 'form_post'
           };
+          await pluginStore.set({ key: 'grant', value: grantConfig });
+        } else {
+          grantConfig.apple.authorize_url = 'https://appleid.apple.com/auth/authorize';
+          grantConfig.apple.callback = `${process.env.BASE_URL}/api/connect/apple/callback`;
+          grantConfig.apple.response = ['form_post'];
+          grantConfig.apple.response_mode = 'form_post';
           await pluginStore.set({ key: 'grant', value: grantConfig });
         }
       }
@@ -147,16 +154,6 @@ module.exports = {
         });
 
       console.log('Apple provider registered.');
-
-      // Update the provider settings with the correct URL and response mode
-      const providerSettings = await pluginStore.get({ key: 'grant' });
-      if (providerSettings && providerSettings.apple) {
-        const authorizeUrl = new URL(providerSettings.apple.authorize_url);
-        authorizeUrl.searchParams.set('response_mode', 'form_post');
-        providerSettings.apple.authorize_url = authorizeUrl.toString();
-        await pluginStore.set({ key: 'grant', value: providerSettings });
-        console.log('Provider settings updated:', providerSettings);
-      }
 
     } catch (error) {
       console.error('Error during bootstrap:', error);
