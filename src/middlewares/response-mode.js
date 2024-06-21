@@ -37,8 +37,8 @@
     return async (ctx, next) => {
       strapi.log.info(`Middleware triggered for URL: ${ctx.request.url}`);
   
-      if (ctx.request.url.includes('/api/connect/apple?')) {
-        strapi.log.info('Handling Apple OAuth callback', ctx.request.url);
+      if (ctx.request.url.includes('/api/connect/apple')) {
+        strapi.log.info(`Handling Apple OAuth callback ${ctx.request.url}`);
   
         const parsedUrl = new URL(ctx.request.url, `https://${ctx.request.headers.host}`);
         
