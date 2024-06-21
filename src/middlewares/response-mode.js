@@ -37,6 +37,7 @@
     return async (ctx, next) => {
       strapi.log.info(`Middleware triggered for URL: ${ctx.request.url}`);
       
+      ctx.request
       // Proceed to the next middleware or route
       await next();
       

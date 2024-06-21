@@ -9,10 +9,5 @@ module.exports = [
   'strapi::session',
   'strapi::favicon',
   'strapi::public',
-  //"global::response-mode",
-  {
-    name: 'inject-response-mode',
-    resolve: './src/middlewares/response-mode',
-    config: {},
-  },
+  "global::response-mode",
 ];
