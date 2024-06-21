@@ -43,7 +43,6 @@ module.exports = {
 
       const appleClientSecret = generateAppleClientSecret();
       console.log('Apple client secret generated.');
-      console.log('Apple authorization URL:', authorizationUrl);
 
       if (grantConfig) {
         console.log('Initial grant config:', grantConfig);
