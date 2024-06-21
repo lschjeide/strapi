@@ -47,7 +47,7 @@ module.exports = {
             secret: process.env.APPLE_CLIENT_SECRET,
             callback: `${process.env.BASE_URL}/api/connect/apple/callback`,
             scope: ['name', 'email'],
-            authorize_url: `${process.env.BASE_URL}/api/connect/apple/callback`,
+            authorize_url: `${process.env.BASE_URL}/api/connect/apple`,
             access_url: 'https://appleid.apple.com/auth/token',
           };
           await pluginStore.set({ key: 'grant', value: grantConfig });
