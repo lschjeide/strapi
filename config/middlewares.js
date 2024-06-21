@@ -9,5 +9,5 @@ module.exports = [
   'strapi::session',
   'strapi::favicon',
   'strapi::public',
-  "global::responseMode",
+  "global::response-mode",
 ];
