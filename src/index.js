@@ -36,7 +36,8 @@ module.exports = {
             authorize_url: 'https://appleid.apple.com/auth/authorize',
             access_url: 'https://appleid.apple.com/auth/token',
             response: ['form_post'],
-            response_mode: 'form_post'
+            response_mode: 'form_post',
+            response_type: 'form_post'
           };
           await pluginStore.set({ key: 'grant', value: grantConfig });
         } else {
@@ -44,6 +45,7 @@ module.exports = {
           grantConfig.apple.callback = `${process.env.BASE_URL}/api/connect/apple/callback`;
           grantConfig.apple.response = ['form_post'];
           grantConfig.apple.response_mode = 'form_post';
+          grantConfig.apple.response_type = 'form_post';
           await pluginStore.set({ key: 'grant', value: grantConfig });
         }
       }
