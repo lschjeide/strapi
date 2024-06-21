@@ -134,7 +134,7 @@ module.exports = {
             data: qs.stringify({
               grant_type: 'authorization_code',
               code,
-              redirect_uri: `${process.env.BASE_URL}/api/connect/apple/callback`,
+              redirect_uri: `https://82e2-98-246-202-159.ngrok-free.app/`,
               client_id: process.env.APPLE_CLIENT_ID,
               client_secret: appleClientSecret,
             }),
