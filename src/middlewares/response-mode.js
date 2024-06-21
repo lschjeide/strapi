@@ -8,7 +8,7 @@ module.exports = (config, { strapi }) => {
     // Add your own logic here.
     return async (ctx, next) => {
         // Add Request-Specific Logic here
-      strapi.log.info(`In a custom Global middleware, ${ctx.request.url}`);
+    /*  strapi.log.info(`In a custom Global middleware, ${ctx.request.url}`);
       if (ctx.request.url.includes('/api/connect/apple/callback')) {
         strapi.log.info('Connecting to Apple Inc', ctx.request.url);
       
@@ -25,7 +25,7 @@ module.exports = (config, { strapi }) => {
         strapi.log.info(`Updated URL, ${ctx.request.url}`);
       }
       }
-    ctx.request 
+    ctx.request */
   
       await next();
   
