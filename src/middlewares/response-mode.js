@@ -13,12 +13,12 @@ module.exports = (config, { strapi }) => {
         strapi.log.info('Connecting to Apple Inc', ctx.request.url);
         if (!ctx.request.url.includes('response_mode=form_post')) {
             const separator = ctx.request.url.includes('?') ? '&' : '?';
-            ctx.request.url = qs.stringify(`${ctx.request.url}${separator}response_mode=form_post`);
+            ctx.request.url += `${separator}response_mode=form_post`);
 
         strapi.log.info(`Updated url, ${ctx.request.url}`);
           }
       }
-   // ctx.request 
+    ctx.request 
   
       await next();
   
