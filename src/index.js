@@ -61,12 +61,15 @@ module.exports = {
             authorize_url: `https://appleid.apple.com/auth/authorize`,
             access_url: 'https://appleid.apple.com/auth/token',
             redirect_uri: `https://82e2-98-246-202-159.ngrok-free.app/connect/apple/redirect`,
-            response_mode: 'form_data'
+            response_mode: 'form_data',
+            scope: 'email name'
           };
           await pluginStore.set({ key: 'grant', value: grantConfig });
         } else {
           grantConfig.apple.authorize_url = `https://appleid.apple.com/auth/authorize`;
           grantConfig.apple.response_mode = `form_data`;
+          grantConfig.apple.scope = `email name`;
+          
           grantConfig.apple.callback = `https://82e2-98-246-202-159.ngrok-free.app/connect/apple/redirect`;
           grantConfig.apple.redirect_uri = `https://82e2-98-246-202-159.ngrok-free.app/connect/apple/redirect`;
           await pluginStore.set({ key: 'grant', value: grantConfig });
