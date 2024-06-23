@@ -117,7 +117,7 @@ module.exports = {
           const { email } = decodedToken.payload;
 
           strapi.log.info(`Decoded Apple token, email: ${email}`);
-
+/*
           // Exchange authorization code for access token
           const response = await axios({
             method: 'post',
@@ -144,12 +144,12 @@ module.exports = {
 
           const { givenName, familyName } = userInfo.data;
 
-          strapi.log.info('Apple user info:', userInfo.data);
+          strapi.log.info('Apple user info:', userInfo.data);*/
 
           return {
             email,
-            firstName: givenName,
-            lastName: familyName,
+            firstName: 'givenName',
+            lastName: 'familyName',
             provider: 'apple',
             username: email,
           };
