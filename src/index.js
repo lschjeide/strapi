@@ -57,17 +57,17 @@ module.exports = {
             key: process.env.APPLE_CLIENT_ID,
             clientSecret: appleClientSecret,
             secret: appleClientSecret,
-            callback: `https://82e2-98-246-202-159.ngrok-free.app/connect/apple/redirect`,
+            callback: `https://identity.blockchainbilliards.io/connect/apple/redirect`,
             authorize_url: `https://appleid.apple.com/auth/authorize`,
             access_url: 'https://appleid.apple.com/auth/token',
-            redirect_uri: `https://82e2-98-246-202-159.ngrok-free.app/connect/apple/redirect`,
+            redirect_uri: `https://identity.blockchainbilliards.io/connect/apple/redirect`,
           };
           await pluginStore.set({ key: 'grant', value: grantConfig });
         } else {
           grantConfig.apple.authorize_url = `https://appleid.apple.com/auth/authorize`;
           
-          grantConfig.apple.callback = `https://82e2-98-246-202-159.ngrok-free.app/connect/apple/redirect`;
-          grantConfig.apple.redirect_uri = `https://82e2-98-246-202-159.ngrok-free.app/connect/apple/redirect`;
+          grantConfig.apple.callback = `https://identity.blockchainbilliards.io/connect/apple/redirect`;
+          grantConfig.apple.redirect_uri = `https://identity.blockchainbilliards.io/connect/apple/redirect`;
           await pluginStore.set({ key: 'grant', value: grantConfig });
         }
       }
