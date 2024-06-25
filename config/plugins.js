@@ -1,45 +1,57 @@
 const AWS = require('aws-sdk');
 
 module.exports = ({ env }) => ({
-  email: {
-    provider: 'custom',
-    providerOptions: {},
-    settings: {
-      defaultFrom: 'leif@blockchainbilliards.io',
-      defaultReplyTo: 'leif@blockchainbilliards.io',
-    },
-    send: async (options) => {
-      // Configure the AWS SDK to use the region of your SES service
-      AWS.config.update({ region: 'us-west-2' }); // Update to your region
-
-      // Create a new SES object
-      const ses = new AWS.SES();
-
-      // Define the parameters for sending an email
-      const params = {
-        Source: options.from,
-        Destination: {
-          ToAddresses: [options.to],
+    email: {
+        provider: 'custom',
+        providerOptions: {},
+        settings: {
+          defaultFrom: 'leif@blockchainbilliards.io',
+          defaultReplyTo: 'leif@blockchainbilliards.io',
         },
-        Message: {
-          Subject: {
-            Data: options.subject,
-          },
-          Body: {
-            Html: {
-              Data: options.html,
-            },
-            Text: {
-              Data: options.text,
-            },
-          },
+        send: async (options) => {
+          // Logging the options to see the email details
+          console.log('Sending email with the following options:', options);
+          
+          try {
+            // Configure the AWS SDK to use the region of your SES service
+            AWS.config.update({ region: 'us-west-2' }); // Update to your region
+            
+            // Create a new SES object
+            const ses = new AWS.SES();
+    
+            // Define the parameters for sending an email
+            const params = {
+              Source: options.from,
+              Destination: {
+                ToAddresses: [options.to],
+              },
+              Message: {
+                Subject: {
+                  Data: options.subject,
+                },
+                Body: {
+                  Html: {
+                    Data: options.html,
+                  },
+                  Text: {
+                    Data: options.text,
+                  },
+                },
+              },
+            };
+    
+            // Send the email
+            const result = await ses.sendEmail(params).promise();
+            
+            // Logging the result to see the response from SES
+            console.log('Email sent successfully:', result);
+          } catch (error) {
+            // Logging the error if the email sending fails
+            console.error('Error sending email:', error);
+            throw error;
+          }
         },
-      };
-
-      // Send the email
-      return ses.sendEmail(params).promise();
-    },
-  },
+      },
   upload: {
     config: {
       provider: 'aws-s3',
