@@ -165,7 +165,7 @@ module.exports = {
             AWS.config.update({ region: 'us-west-2' }); // Update to your region
             const ses = new AWS.SES();
             const params = {
-              Source: 'leif@blockchainbilliards.io',
+              Source: options.from,
               Destination: {
                 ToAddresses: [options.to],
               },
@@ -195,7 +195,7 @@ module.exports = {
           };
         };
 
-        logger.info('Email provider configured2.');
+        logger.info('Email provider configured.');
 
 
       // Call the email configuration function
