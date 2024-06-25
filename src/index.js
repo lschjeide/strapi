@@ -195,7 +195,7 @@ module.exports = {
           };
         };
 
-        logger.info('Email provider configured.');
+        logger.info('Email provider configured2.');
 
 
       // Call the email configuration function
