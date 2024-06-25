@@ -61,6 +61,13 @@ module.exports = ({ env }) => {
   },
   'users-permissions': {
     config: {
+        email: {
+          enabled: true,
+          confirmation: {
+            enabled: true,
+            redirectUrl: 'https://identity.blockchainbilliards.io/update-name', // Change to your app URL
+          },
+        },
       providers: {
         google: {
           enabled: true,
