@@ -1,4 +1,5 @@
 const AWS = require('aws-sdk');
+const logger = require('../utils/logger');
 
 module.exports = ({ env }) => ({
     email: {
@@ -9,17 +10,11 @@ module.exports = ({ env }) => ({
           defaultReplyTo: 'leif@blockchainbilliards.io',
         },
         send: async (options) => {
-          // Logging the options to see the email details
-          console.log('Sending email with the following options:', options);
-          
-          try {
-            // Configure the AWS SDK to use the region of your SES service
-            AWS.config.update({ region: 'us-west-2' }); // Update to your region
-            
-            // Create a new SES object
-            const ses = new AWS.SES();
+          logger.info('Sending email with the following options:', options);
     
-            // Define the parameters for sending an email
+          try {
+            AWS.config.update({ region: 'us-west-2' }); // Update to your region
+            const ses = new AWS.SES();
             const params = {
               Source: options.from,
               Destination: {
@@ -40,14 +35,10 @@ module.exports = ({ env }) => ({
               },
             };
     
-            // Send the email
             const result = await ses.sendEmail(params).promise();
-            
-            // Logging the result to see the response from SES
-            console.log('Email sent successfully:', result);
+            logger.info('Email sent successfully:', result);
           } catch (error) {
-            // Logging the error if the email sending fails
-            console.error('Error sending email:', error);
+            logger.error('Error sending email:', error);
             throw error;
           }
         },
