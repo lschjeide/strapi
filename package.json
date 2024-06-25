@@ -12,6 +12,7 @@
   "dependencies": {
     "@strapi/plugin-cloud": "4.24.4",
     "@strapi/plugin-documentation": "4.24.4",
+    "@strapi/plugin-email": "^4.25.1",
     "@strapi/plugin-i18n": "4.24.4",
     "@strapi/plugin-users-permissions": "4.24.4",
     "@strapi/provider-email-amazon-ses": "^4.25.1",
