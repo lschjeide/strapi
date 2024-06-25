@@ -1,7 +1,10 @@
 const AWS = require('aws-sdk');
 const logger = require('../utils/logger');
 
-module.exports = ({ env }) => ({
+logger.info('Loading plugins configuration');
+module.exports = ({ env }) => {
+    logger.info('Configuring email provider');
+  return {
     email: {
         provider: 'custom',
         providerOptions: {},
@@ -88,4 +91,5 @@ module.exports = ({ env }) => ({
       },
     },
   },
-});
+}
+};
