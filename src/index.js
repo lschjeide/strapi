@@ -196,7 +196,7 @@ module.exports = {
 
 
       // Call the email configuration function
-      configureEmailProvider();
+      //configureEmailProvider();
 
     } catch (error) {
       console.error('Error during bootstrap:', error);
