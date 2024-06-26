@@ -4,34 +4,6 @@ const jwt = require('jsonwebtoken');
 const qs = require('qs');
 const fs = require('fs');
 const path = require('path');
-const AWS = require('aws-sdk');
-const { createLogger, format, transports } = require('winston');
-
-// Configure Winston logger
-const logger = createLogger({
-  level: 'info',
-  format: format.combine(
-    format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
-    format.errors({ stack: true }),
-    format.splat(),
-    format.json()
-  ),
-  defaultMeta: { service: 'user-service' },
-  transports: [
-    new transports.File({ filename: 'error.log', level: 'error' }),
-    new transports.File({ filename: 'combined.log' }),
-  ],
-});
-
-if (process.env.NODE_ENV !== 'production') {
-  logger.add(new transports.Console({
-    format: format.combine(
-      format.colorize(),
-      format.simple()
-    ),
-  }));
-}
-
 
 module.exports = {
   register(/*{ strapi }*/) {},
@@ -144,6 +116,34 @@ module.exports = {
           const { email } = decodedToken.payload;
 
           strapi.log.info(`Decoded Apple token, email: ${email}`);
+/*
+          // Exchange authorization code for access token
+          const response = await axios({
+            method: 'post',
+            url: 'https://appleid.apple.com/auth/token',
+            data: qs.stringify({
+              grant_type: 'authorization_code',
+              code,
+              redirect_uri: `${process.env.BASE_URL}/api/auth/apple/callback`,
+              client_id: process.env.APPLE_CLIENT_ID,
+              client_secret: appleClientSecret,
+            }),
+          });
+
+          const { access_token } = response.data;
+
+          strapi.log.info('Apple access token:', access_token);
+
+          // Get user info from Apple
+          const userInfo = await axios({
+            method: 'get',
+            url: 'https://appleid.apple.com/auth/keys',
+            headers: { Authorization: `Bearer ${access_token}` },
+          });
+
+          const { givenName, familyName } = userInfo.data;
+
+          strapi.log.info('Apple user info:', userInfo.data);*/
 
           return {
             email,
@@ -154,12 +154,12 @@ module.exports = {
 
         strapi.log.info('Apple provider registered.');
 
+/*
          // Email provider configuration
       const configureEmailProvider = () => {
         const emailService = strapi.plugin('email').service('email');
 
         emailService.send = async (options) => {
-          logger.info('Attempting to send email with options:', options);
 
           try {
             AWS.config.update({ region: 'us-west-2' }); // Update to your region
@@ -184,18 +184,15 @@ module.exports = {
               },
             };
 
-              logger.info('Sending email with params:', params);
 
               const result = await ses.sendEmail(params).promise();
-              logger.info('Email sent successfully:', result);
             } catch (error) {
-              logger.error('Error sending email:', error);
               throw error;
             }
           };
         };
 
-        logger.info('Email provider configured.');
+        logger.info('Email provider configured.');*/
 
 
       // Call the email configuration function
