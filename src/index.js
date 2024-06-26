@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const qs = require('qs');
 const fs = require('fs');
 const path = require('path');
+const AWS = require('aws-sdk');
 
 module.exports = {
   register(/*{ strapi }*/) {},
@@ -154,7 +155,7 @@ module.exports = {
 
         strapi.log.info('Apple provider registered.');
 
-/*
+
          // Email provider configuration
       const configureEmailProvider = () => {
         const emailService = strapi.plugin('email').service('email');
@@ -192,11 +193,11 @@ module.exports = {
           };
         };
 
-        logger.info('Email provider configured.');*/
+        strapi.log.info('Email provider configured.');
 
 
       // Call the email configuration function
-      //configureEmailProvider();
+      configureEmailProvider();
 
     } catch (error) {
       console.error('Error during bootstrap:', error);
