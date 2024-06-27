@@ -1,0 +1,30 @@
+{
+  "kind": "collectionType",
+  "collectionName": "survey_questions",
+  "info": {
+    "singularName": "survey-question",
+    "pluralName": "survey-questions",
+    "displayName": "Survey Question",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "question_text": {
+      "type": "string"
+    },
+    "question_type": {
+      "type": "enumeration",
+      "enum": [
+        "text",
+        "radio",
+        "checkbox"
+      ]
+    },
+    "options": {
+      "type": "json"
+    }
+  }
+}

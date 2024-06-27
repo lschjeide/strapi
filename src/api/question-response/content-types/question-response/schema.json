@@ -1,0 +1,19 @@
+{
+  "kind": "collectionType",
+  "collectionName": "question_responses",
+  "info": {
+    "singularName": "question-response",
+    "pluralName": "question-responses",
+    "displayName": "Question Response",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "response": {
+      "type": "string"
+    }
+  }
+}

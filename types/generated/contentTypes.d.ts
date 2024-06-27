@@ -362,81 +362,6 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
-export interface ApiMovieMovie extends Schema.CollectionType {
-  collectionName: 'movies';
-  info: {
-    singularName: 'movie';
-    pluralName: 'movies';
-    displayName: 'Movie';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    imdbID: Attribute.UID & Attribute.Required;
-    movie_ratings: Attribute.Relation<
-      'api::movie.movie',
-      'oneToMany',
-      'api::movie-rating.movie-rating'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::movie.movie',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::movie.movie',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
-export interface ApiMovieRatingMovieRating extends Schema.CollectionType {
-  collectionName: 'movie_ratings';
-  info: {
-    singularName: 'movie-rating';
-    pluralName: 'movie-ratings';
-    displayName: 'Movie Rating';
-    description: '';
-  };
-  options: {
-    draftAndPublish: false;
-  };
-  attributes: {
-    rating: Attribute.Integer;
-    movie: Attribute.Relation<
-      'api::movie-rating.movie-rating',
-      'manyToOne',
-      'api::movie.movie'
-    >;
-    user: Attribute.Relation<
-      'api::movie-rating.movie-rating',
-      'oneToOne',
-      'plugin::users-permissions.user'
-    >;
-    createdAt: Attribute.DateTime;
-    updatedAt: Attribute.DateTime;
-    createdBy: Attribute.Relation<
-      'api::movie-rating.movie-rating',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-    updatedBy: Attribute.Relation<
-      'api::movie-rating.movie-rating',
-      'oneToOne',
-      'admin::user'
-    > &
-      Attribute.Private;
-  };
-}
-
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -800,6 +725,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
     >;
     firstName: Attribute.String;
     lastName: Attribute.String;
+    survey_responses: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::survey-response.survey-response'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -864,6 +794,233 @@ export interface PluginI18NLocale extends Schema.CollectionType {
   };
 }
 
+export interface ApiMovieMovie extends Schema.CollectionType {
+  collectionName: 'movies';
+  info: {
+    singularName: 'movie';
+    pluralName: 'movies';
+    displayName: 'Movie';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    imdbID: Attribute.UID & Attribute.Required;
+    movie_ratings: Attribute.Relation<
+      'api::movie.movie',
+      'oneToMany',
+      'api::movie-rating.movie-rating'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::movie.movie',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::movie.movie',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiMovieRatingMovieRating extends Schema.CollectionType {
+  collectionName: 'movie_ratings';
+  info: {
+    singularName: 'movie-rating';
+    pluralName: 'movie-ratings';
+    displayName: 'Movie Rating';
+    description: '';
+  };
+  options: {
+    draftAndPublish: false;
+  };
+  attributes: {
+    rating: Attribute.Integer;
+    movie: Attribute.Relation<
+      'api::movie-rating.movie-rating',
+      'manyToOne',
+      'api::movie.movie'
+    >;
+    user: Attribute.Relation<
+      'api::movie-rating.movie-rating',
+      'oneToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::movie-rating.movie-rating',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::movie-rating.movie-rating',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiQuestionResponseQuestionResponse
+  extends Schema.CollectionType {
+  collectionName: 'question_responses';
+  info: {
+    singularName: 'question-response';
+    pluralName: 'question-responses';
+    displayName: 'Question Response';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    response: Attribute.String;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::question-response.question-response',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::question-response.question-response',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSurveySurvey extends Schema.CollectionType {
+  collectionName: 'surveys';
+  info: {
+    singularName: 'survey';
+    pluralName: 'surveys';
+    displayName: 'Survey';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String;
+    description: Attribute.Text;
+    survey_questions: Attribute.Relation<
+      'api::survey.survey',
+      'oneToMany',
+      'api::survey-question.survey-question'
+    >;
+    survey_responses: Attribute.Relation<
+      'api::survey.survey',
+      'oneToMany',
+      'api::survey-response.survey-response'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::survey.survey',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::survey.survey',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSurveyQuestionSurveyQuestion extends Schema.CollectionType {
+  collectionName: 'survey_questions';
+  info: {
+    singularName: 'survey-question';
+    pluralName: 'survey-questions';
+    displayName: 'Survey Question';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    question_text: Attribute.String;
+    question_type: Attribute.Enumeration<['text', 'radio', 'checkbox']>;
+    options: Attribute.JSON;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::survey-question.survey-question',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::survey-question.survey-question',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiSurveyResponseSurveyResponse extends Schema.CollectionType {
+  collectionName: 'survey_responses';
+  info: {
+    singularName: 'survey-response';
+    pluralName: 'survey-responses';
+    displayName: 'Survey Response';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    users_permissions_user: Attribute.Relation<
+      'api::survey-response.survey-response',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    question_responses: Attribute.Relation<
+      'api::survey-response.survey-response',
+      'oneToMany',
+      'api::question-response.question-response'
+    >;
+    survey: Attribute.Relation<
+      'api::survey-response.survey-response',
+      'manyToOne',
+      'api::survey.survey'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::survey-response.survey-response',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::survey-response.survey-response',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 declare module '@strapi/types' {
   export module Shared {
     export interface ContentTypes {
@@ -874,8 +1031,6 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
-      'api::movie.movie': ApiMovieMovie;
-      'api::movie-rating.movie-rating': ApiMovieRatingMovieRating;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
@@ -884,6 +1039,12 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'plugin::i18n.locale': PluginI18NLocale;
+      'api::movie.movie': ApiMovieMovie;
+      'api::movie-rating.movie-rating': ApiMovieRatingMovieRating;
+      'api::question-response.question-response': ApiQuestionResponseQuestionResponse;
+      'api::survey.survey': ApiSurveySurvey;
+      'api::survey-question.survey-question': ApiSurveyQuestionSurveyQuestion;
+      'api::survey-response.survey-response': ApiSurveyResponseSurveyResponse;
     }
   }
 }
