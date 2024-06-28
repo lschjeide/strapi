@@ -12,6 +12,17 @@
   },
   "pluginOptions": {},
   "attributes": {
+    "survey_response": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::survey-response.survey-response",
+      "inversedBy": "responses"
+    },
+    "survey_question": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::survey-question.survey-question"
+    },
     "response": {
       "type": "string"
     }

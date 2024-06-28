@@ -21,7 +21,8 @@
     "survey_questions": {
       "type": "relation",
       "relation": "oneToMany",
-      "target": "api::survey-question.survey-question"
+      "target": "api::survey-question.survey-question",
+      "mappedBy": "survey"
     },
     "survey_responses": {
       "type": "relation",
@@ -31,3 +32,5 @@
     }
   }
 }
+
+

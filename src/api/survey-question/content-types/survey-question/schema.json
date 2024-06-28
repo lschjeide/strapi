@@ -23,6 +23,12 @@
         "checkbox"
       ]
     },
+    "survey": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::survey.survey",
+      "inversedBy": "survey_questions"
+    },
     "options": {
       "type": "json"
     }

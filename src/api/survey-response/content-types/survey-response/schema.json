@@ -18,16 +18,17 @@
       "target": "plugin::users-permissions.user",
       "inversedBy": "survey_responses"
     },
-    "question_responses": {
-      "type": "relation",
-      "relation": "oneToMany",
-      "target": "api::question-response.question-response"
-    },
     "survey": {
       "type": "relation",
       "relation": "manyToOne",
       "target": "api::survey.survey",
       "inversedBy": "survey_responses"
+    },
+    "responses": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::question-response.question-response",
+      "mappedBy": "survey_response"
     }
   }
 }

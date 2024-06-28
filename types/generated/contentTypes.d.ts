@@ -882,6 +882,16 @@ export interface ApiQuestionResponseQuestionResponse
     draftAndPublish: true;
   };
   attributes: {
+    survey_response: Attribute.Relation<
+      'api::question-response.question-response',
+      'manyToOne',
+      'api::survey-response.survey-response'
+    >;
+    survey_question: Attribute.Relation<
+      'api::question-response.question-response',
+      'manyToOne',
+      'api::survey-question.survey-question'
+    >;
     response: Attribute.String;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -957,6 +967,11 @@ export interface ApiSurveyQuestionSurveyQuestion extends Schema.CollectionType {
   attributes: {
     question_text: Attribute.String;
     question_type: Attribute.Enumeration<['text', 'radio', 'checkbox']>;
+    survey: Attribute.Relation<
+      'api::survey-question.survey-question',
+      'manyToOne',
+      'api::survey.survey'
+    >;
     options: Attribute.JSON;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
@@ -993,15 +1008,15 @@ export interface ApiSurveyResponseSurveyResponse extends Schema.CollectionType {
       'manyToOne',
       'plugin::users-permissions.user'
     >;
-    question_responses: Attribute.Relation<
-      'api::survey-response.survey-response',
-      'oneToMany',
-      'api::question-response.question-response'
-    >;
     survey: Attribute.Relation<
       'api::survey-response.survey-response',
       'manyToOne',
       'api::survey.survey'
+    >;
+    responses: Attribute.Relation<
+      'api::survey-response.survey-response',
+      'oneToMany',
+      'api::question-response.question-response'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
