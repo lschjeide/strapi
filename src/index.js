@@ -7,35 +7,49 @@ const path = require('path');
 const AWS = require('aws-sdk');
 
 module.exports = {
-  /*register({ strapi }) {
+
+  register({ strapi }) {
     const extensionService = strapi.plugin('graphql').service('extension');
 
     extensionService.use(({ nexus }) => {
+      const ResponseInput = nexus.inputObjectType({
+        name: 'ResponseInput',
+        definition(t) {
+          t.nonNull.id('survey_question');
+          t.nonNull.string('response');
+        },
+      });
+
       const createSurveyResponseMutation = nexus.extendType({
         type: 'Mutation',
         definition(t) {
           t.field('createSurveyResponse', {
             type: 'SurveyResponseEntityResponse',
             args: {
-              data: nexus.arg({ type: 'SurveyResponseInput' }),
+              data: nexus.arg({
+                type: nexus.inputObjectType({
+                  name: 'SurveyResponseInputLeif',
+                  definition(t) {
+                    t.nonNull.id('users_permissions_user');
+                    t.nonNull.id('survey');
+                    t.list.field('responses', { type: 'ResponseInput' });
+                  },
+                }),
+              }),
             },
             resolve: async (parent, { data }, context) => {
-              const { user, survey, responses } = data;
-              console.log('got me some data', data);
+              const { users_permissions_user, survey, responses } = data;
+
               // Create survey response
               const surveyResponse = await strapi.services['api::survey-response.survey-response'].create({
                 data: {
-                  user,
+                  users_permissions_user,
                   survey,
                 },
               });
 
-              console.log('got me a survey response', surveyResponse)
-
-              console.log('goona create me some responses', responses)
               // Create question responses
               for (const response of responses) {
-                console.log('response', response)
                 await strapi.services['api::question-response.question-response'].create({
                   data: {
                     survey_response: surveyResponse.id,
@@ -48,56 +62,13 @@ module.exports = {
               return {
                 data: surveyResponse,
               };
-   
-
-             // console.log('Survey response created:', surveyResponse);
-
-              return { 'hi': '100'} ;//surveyResponse;
             },
           });
         },
       });
 
       return {
-        types: [createSurveyResponseMutation],
-      };
-    });
-  },*/
-
-  register({ strapi }) {
-    const extensionService = strapi.plugin('graphql').service('extension');
-
-    extensionService.use(({ nexus }) => {
-      const createSurveyResponseMutation = nexus.extendType({
-        type: 'Mutation',
-        definition(t) {
-          t.field('createSurveyResponse', {
-            type: 'SurveyResponseEntityResponse',
-            args: {
-              data: nexus.arg({ type: 'SurveyResponseInput' }),
-            },
-            resolve: async (parent, { data }, context) => {
-              const { users_permissions_user, survey, responses } = data;
-
-              // Create survey response
-              const surveyResponse = await strapi.services['api::survey-response.survey-response'].create({
-                data: {
-                  users_permissions_user,
-                  survey,
-                  responses, // directly using the array of IDs
-                },
-              });
-
-              return {
-                data: surveyResponse,
-              };
-            },
-          });
-        },
-      });
-
-      return {
-        types: [createSurveyResponseMutation],
+        types: [ResponseInput, createSurveyResponseMutation],
       };
     });
   },
