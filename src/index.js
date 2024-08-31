@@ -122,7 +122,6 @@ module.exports = {
             key: process.env.APPLE_CLIENT_ID,
             clientSecret: appleClientSecret,
             secret: appleClientSecret,
-            scope: ['openid'],
             callback: `https://identity.blockchainbilliards.io/connect/apple/redirect`,
             authorize_url: `https://appleid.apple.com/auth/authorize`,
             access_url: 'https://appleid.apple.com/auth/token',
@@ -180,9 +179,9 @@ module.exports = {
           }
 
           strapi.log.info(`Decoed token: ${JSON.stringify(decodedToken)}`);
-          const { email, sub } = decodedToken.payload;
+          const { email } = decodedToken.payload;
 
-          strapi.log.info(`Decoded Apple token, email: ${email}, ${sub}`);
+          strapi.log.info(`Decoded Apple token, email: ${email}`);
 /*
           // Exchange authorization code for access token
           const response = await axios({
@@ -213,7 +212,7 @@ module.exports = {
           strapi.log.info('Apple user info:', userInfo.data);*/
 
           return {
-            email: email,
+            email,
             provider: 'apple',
             username: email,
           };
