@@ -178,7 +178,7 @@ module.exports = {
             throw new Error('Unable to decode ID token');
           }
 
-          strapi.log.info(`Decoed token: ${decodedToken}`);
+          strapi.log.info(`Decoed token: ${JSON.stringify(decodedToken)}`);
           const { email } = decodedToken.payload;
 
           strapi.log.info(`Decoded Apple token, email: ${email}`);
