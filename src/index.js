@@ -123,8 +123,9 @@ module.exports = {
             clientSecret: appleClientSecret,
             secret: appleClientSecret,
             scope: ['email'],
+            response_mode: ['form_post'],
             callback: `https://identity.blockchainbilliards.io/connect/apple/redirect`,
-            authorize_url: `https://appleid.apple.com/auth/authorize?&response_mode=form_post`,
+            authorize_url: `https://appleid.apple.com/auth/authorize`,
             access_url: 'https://appleid.apple.com/auth/token',
             redirect_uri: `https://identity.blockchainbilliards.io/connect/apple/redirect`,
           };
