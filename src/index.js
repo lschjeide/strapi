@@ -122,6 +122,7 @@ module.exports = {
             key: process.env.APPLE_CLIENT_ID,
             clientSecret: appleClientSecret,
             secret: appleClientSecret,
+            scope: ['email'],
             callback: `https://identity.blockchainbilliards.io/connect/apple/redirect`,
             authorize_url: `https://appleid.apple.com/auth/authorize`,
             access_url: 'https://appleid.apple.com/auth/token',
