@@ -180,9 +180,9 @@ module.exports = {
           }
 
           strapi.log.info(`Decoed token: ${JSON.stringify(decodedToken)}`);
-          const { email } = decodedToken.payload;
+          const { email, sub } = decodedToken.payload;
 
-          strapi.log.info(`Decoded Apple token, email: ${email}`);
+          strapi.log.info(`Decoded Apple token, email: ${email}, ${sub}`);
 /*
           // Exchange authorization code for access token
           const response = await axios({
@@ -215,7 +215,7 @@ module.exports = {
           return {
             email,
             provider: 'apple',
-            username: email,
+            username: sub,
           };
         });
 
