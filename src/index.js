@@ -213,9 +213,9 @@ module.exports = {
           strapi.log.info('Apple user info:', userInfo.data);*/
 
           return {
-            email: email ? email : `${sub}@change.com`,
+            email: email,
             provider: 'apple',
-            username: sub,
+            username: email,
           };
         });
 
